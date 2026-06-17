@@ -1,0 +1,101 @@
+startup_name,industry,description,website,country
+LearnSphere,EdTech,An adaptive learning platform that uses AI to personalize K-12 math and science curricula based on each student's pace and gaps.,https://www.learnsphere.io,United States
+EduNest,EdTech,A mobile-first tutoring marketplace connecting students with vetted subject-matter tutors for live one-on-one video sessions.,https://www.edunest.co,India
+BrightPath Academy,EdTech,Offers gamified coding bootcamps for teenagers with project-based curricula and industry mentorship.,https://www.brightpathacademy.com,United Kingdom
+SkillForge,EdTech,A corporate upskilling platform delivering micro-courses and certifications in cloud computing and data analytics.,https://www.skillforge.ai,Canada
+Lingowise,EdTech,A language-learning app combining spaced repetition with AI conversation partners for immersive practice.,https://www.lingowise.app,Germany
+ClassPilot,EdTech,"A classroom management suite that automates attendance, grading, and parent communication for primary schools.",https://www.classpilot.io,Australia
+TutorGrid,EdTech,Connects university students with peer tutors and provides shared whiteboards and recorded study sessions.,https://www.tutorgrid.com,United States
+EduMetric,EdTech,Provides learning analytics dashboards that help institutions track student engagement and predict dropout risk.,https://www.edumetric.io,Singapore
+Mindbloom Learning,EdTech,A social-emotional learning platform offering interactive lessons and mindfulness exercises for middle schoolers.,https://www.mindbloomlearning.com,Netherlands
+ScholarLink,EdTech,Aggregates scholarship opportunities and uses matching algorithms to connect students with relevant funding.,https://www.scholarlink.org,Kenya
+CodeSprout,EdTech,Teaches children aged 6-12 the fundamentals of programming through drag-and-drop visual coding games.,https://www.codesprout.io,United States
+Examly,EdTech,An online proctoring and assessment platform with AI-based cheating detection for remote exams.,https://www.examly.io,India
+StudyOrbit,EdTech,A collaborative note-sharing and flashcard platform built for high school and college study groups.,https://www.studyorbit.com,Brazil
+TeachStream,EdTech,A live-streaming platform enabling educators to host paid online masterclasses and webinars.,https://www.teachstream.tv,United Kingdom
+NeuroLearn,EdTech,Uses cognitive science and neurofeedback to design personalized study plans for learners with ADHD.,https://www.neurolearn.health,United States
+CampusConnect,EdTech,"A student lifecycle platform managing admissions, enrollment, and alumni engagement for universities.",https://www.campusconnect.edu.au,Australia
+EduVault,EdTech,A blockchain-based credential verification service that issues tamper-proof digital diplomas and certificates.,https://www.eduvault.io,Switzerland
+PayPivot,FinTech,A digital wallet enabling instant peer-to-peer payments and bill splitting for young urban professionals.,https://www.paypivot.com,United States
+LendLoom,FinTech,An AI-driven lending platform that offers small businesses fast credit decisions using alternative data.,https://www.lendloom.io,United Kingdom
+CoinLedger Pro,FinTech,Provides automated cryptocurrency portfolio tracking and tax reporting for retail and institutional investors.,https://www.coinledgerpro.com,Singapore
+SaveSphere,FinTech,A micro-savings app that rounds up everyday purchases and invests the spare change into diversified funds.,https://www.savesphere.app,India
+NeoBankly,FinTech,A fully digital neobank offering fee-free checking accounts and early salary access to gig workers.,https://www.neobankly.com,Nigeria
+RemitFlow,FinTech,A low-cost cross-border remittance service leveraging blockchain to reduce transfer fees for migrant workers.,https://www.remitflow.io,United Arab Emirates
+InsureMint,FinTech,"An insurtech platform offering on-demand, usage-based insurance for vehicles, travel, and electronics.",https://www.insuremint.com,Germany
+WealthNest,FinTech,"A robo-advisor delivering automated, goal-based investment portfolios with low management fees.",https://www.wealthnest.io,Canada
+FraudShield,FinTech,Real-time transaction monitoring and fraud detection API for e-commerce and banking platforms.,https://www.fraudshield.ai,Israel
+PayrollPilot,FinTech,"Automates payroll, tax filing, and compliance for small and medium-sized businesses across borders.",https://www.payrollpilot.com,United States
+CreditClarity,FinTech,"Helps consumers monitor and improve their credit scores with personalized, AI-generated recommendations.",https://www.creditclarity.io,South Africa
+TradeNimbus,FinTech,A commission-free stock and ETF trading app with fractional shares and social investing features.,https://www.tradenimbus.com,United Kingdom
+BillBee,FinTech,An automated accounts payable platform that digitizes invoices and streamlines vendor payments.,https://www.billbee.io,Australia
+QuantEdge,FinTech,Provides algorithmic trading infrastructure and backtesting tools for quantitative hedge funds.,https://www.quantedge.io,United States
+OpenBanking Hub,FinTech,An API aggregation layer that lets developers securely connect to thousands of bank accounts.,https://www.openbankinghub.eu,Estonia
+ZakatPay,FinTech,A Sharia-compliant fintech platform facilitating charitable giving and ethical investments.,https://www.zakatpay.com,Malaysia
+EquityForge,FinTech,"Helps startups manage cap tables, employee stock options, and fundraising rounds in one dashboard.",https://www.equityforge.io,United States
+VitalTrack,HealthTech,A wearable-integrated platform that monitors chronic disease patients and alerts clinicians to anomalies.,https://www.vitaltrack.health,United States
+MediQueue,HealthTech,A telemedicine app that reduces wait times by matching patients with available doctors for video consults.,https://www.mediqueue.com,India
+GenoSense,HealthTech,Offers at-home genetic testing kits and AI-powered reports on disease risk and nutrition.,https://www.genosense.bio,United Kingdom
+TheraMind,HealthTech,A mental wellness platform connecting users with licensed therapists and offering guided CBT programs.,https://www.theramind.app,Canada
+PharmaLink,HealthTech,An online pharmacy and medication delivery service with automated refill reminders and dosage tracking.,https://www.pharmalink.io,Germany
+CareNest,HealthTech,A home-care coordination platform that schedules caregivers and tracks elderly patients' daily activities.,https://www.carenest.health,Australia
+RadiantAI,HealthTech,Uses deep learning to assist radiologists in detecting tumors and abnormalities in medical imaging scans.,https://www.radiantai.com,United States
+ClinTrialHub,HealthTech,Matches patients with relevant clinical trials and streamlines recruitment for research organizations.,https://www.clintrialhub.io,Switzerland
+NutriPlate,HealthTech,A nutrition-tracking app that generates personalized meal plans based on health goals and dietary needs.,https://www.nutriplate.app,Spain
+SurgiSync,HealthTech,An operating room scheduling and surgical inventory management platform for hospitals.,https://www.surgisync.io,United States
+DentaCloud,HealthTech,"A cloud-based practice management system for dental clinics handling appointments, billing, and records.",https://www.dentacloud.com,Brazil
+BioWearables,HealthTech,Develops smart patches that continuously monitor glucose levels for diabetics without finger pricks.,https://www.biowearables.io,South Korea
+MindfulMe,HealthTech,"A meditation and sleep app offering guided sessions, breathing exercises, and stress-tracking tools.",https://www.mindfulme.app,United States
+EHRBridge,HealthTech,An interoperability platform that securely connects fragmented electronic health record systems.,https://www.ehrbridge.io,United Kingdom
+PediaCare,HealthTech,A pediatric telehealth service offering 24/7 access to child specialists and developmental tracking.,https://www.pediacare.health,India
+PhysioMotion,HealthTech,Provides AI-guided physical therapy with motion-capture feedback for at-home rehabilitation.,https://www.physiomotion.com,Netherlands
+OncoData,HealthTech,Aggregates oncology patient data to support precision medicine and personalized cancer treatment plans.,https://www.oncodata.io,United States
+FarmSense,AgriTech,Deploys IoT soil sensors and analytics to help farmers optimize irrigation and reduce water usage.,https://www.farmsense.io,United States
+CropMind,AgriTech,Uses satellite imagery and AI to detect crop diseases early and recommend targeted interventions.,https://www.cropmind.ai,India
+AgriLink Market,AgriTech,A digital marketplace connecting smallholder farmers directly with buyers to eliminate middlemen.,https://www.agrilinkmarket.com,Kenya
+GreenYield,AgriTech,Provides precision agriculture drones for aerial crop spraying and field mapping.,https://www.greenyield.io,Brazil
+LivestockIQ,AgriTech,A herd management platform using wearable sensors to monitor cattle health and breeding cycles.,https://www.livestockiq.com,Australia
+HydroGrow,AgriTech,Builds modular vertical hydroponic farming systems for urban indoor food production.,https://www.hydrogrow.farm,Netherlands
+SoilSync,AgriTech,Offers lab-grade soil testing and AI-based fertilizer recommendations delivered to smartphones.,https://www.soilsync.io,Nigeria
+HarvestPredict,AgriTech,Uses weather data and machine learning to forecast crop yields for insurers and commodity traders.,https://www.harvestpredict.com,United States
+AquaFarm Tech,AgriTech,A smart aquaculture platform that monitors water quality and automates feeding in fish farms.,https://www.aquafarmtech.io,Norway
+AgriFinance,AgriTech,Provides micro-loans and crop insurance to rural farmers using satellite and yield data for underwriting.,https://www.agrifinance.co,India
+PestGuard AI,AgriTech,An image-recognition app that identifies pests and weeds and suggests organic treatment options.,https://www.pestguardai.com,United States
+ColdChainPro,AgriTech,Optimizes post-harvest cold storage and logistics to reduce spoilage of perishable produce.,https://www.coldchainpro.io,South Africa
+SeedVault,AgriTech,A digital platform tracking seed genetics and supply chains to improve crop diversity and traceability.,https://www.seedvault.ag,Mexico
+SmartGreenhouse,AgriTech,"Automates climate control, lighting, and nutrient delivery in commercial greenhouses via IoT.",https://www.smartgreenhouse.io,Spain
+RanchRoute,AgriTech,A logistics and supply chain platform optimizing the transport of livestock and farm goods.,https://www.ranchroute.com,Argentina
+AgriBot Systems,AgriTech,"Develops autonomous field robots for weeding, planting, and harvesting row crops.",https://www.agribotsystems.io,United States
+FarmWeather,AgriTech,Delivers hyperlocal weather forecasts and frost alerts tailored to individual farm plots.,https://www.farmweather.app,Canada
+FlowDesk,SaaS,"A unified project management and collaboration platform with kanban boards, docs, and time tracking.",https://www.flowdesk.io,United States
+SyncMail,SaaS,An email automation and CRM tool helping sales teams manage outreach campaigns and lead pipelines.,https://www.syncmail.com,United Kingdom
+DataNest Analytics,SaaS,A self-service business intelligence platform that turns raw data into interactive dashboards.,https://www.datanest.io,Germany
+DeskHero,SaaS,"An AI-powered customer support helpdesk with ticketing, chatbots, and knowledge base management.",https://www.deskhero.com,Canada
+CloudVault,SaaS,Provides automated cloud backup and disaster recovery for SaaS applications and databases.,https://www.cloudvault.io,United States
+TeamPulse,SaaS,"An employee engagement platform offering anonymous surveys, feedback loops, and wellness tracking.",https://www.teampulse.app,Australia
+InvoiceFlow,SaaS,"Automates recurring billing, invoicing, and subscription management for service-based businesses.",https://www.invoiceflow.io,Singapore
+DocuSign Hub,SaaS,A secure e-signature and document workflow platform for contracts and legal agreements.,https://www.docusignhub.com,Ireland
+StackMonitor,SaaS,Provides real-time application performance monitoring and error tracking for development teams.,https://www.stackmonitor.io,United States
+HRBloom,SaaS,"An all-in-one human resources platform handling recruitment, onboarding, and performance reviews.",https://www.hrbloom.com,India
+MeetSync,SaaS,A scheduling and calendar coordination tool that eliminates back-and-forth meeting booking.,https://www.meetsync.io,United States
+ContentForge,SaaS,"An AI writing assistant that helps marketing teams generate blog posts, ads, and social content.",https://www.contentforge.ai,United Kingdom
+SecureGate,SaaS,An identity and access management platform offering single sign-on and multi-factor authentication.,https://www.securegate.io,Israel
+WorkflowWiz,SaaS,A no-code automation platform that connects apps and automates repetitive business processes.,https://www.workflowwiz.com,Netherlands
+AssetTrack Pro,SaaS,"An IT asset and inventory management system for tracking hardware, software licenses, and warranties.",https://www.assettrackpro.io,United States
+LegalEase,SaaS,A contract lifecycle management platform with AI-powered clause analysis and approval workflows.,https://www.legalease.io,Canada
+ShopWave,E-commerce,"A headless commerce platform enabling brands to build fast, customizable online storefronts.",https://www.shopwave.io,United States
+KartBuddy,E-commerce,An abandoned cart recovery and personalized recommendation engine for online retailers.,https://www.kartbuddy.com,India
+ThriftLoop,E-commerce,A peer-to-peer marketplace for buying and selling secondhand fashion and vintage clothing.,https://www.thriftloop.com,United Kingdom
+FreshCrate,E-commerce,An online grocery delivery service specializing in locally sourced organic produce and meal kits.,https://www.freshcrate.io,Australia
+DropShiply,E-commerce,A dropshipping automation platform that connects merchants with global suppliers and fulfillment.,https://www.dropshiply.com,United States
+LuxeBox,E-commerce,A subscription box service curating premium beauty and skincare products tailored to each customer.,https://www.luxebox.co,France
+PayCart,E-commerce,A one-click checkout and payment optimization solution that increases online conversion rates.,https://www.paycart.io,Germany
+ReturnEase,E-commerce,Streamlines product returns and exchanges with automated labels and refund processing for retailers.,https://www.returnease.com,Canada
+MarketMosaic,E-commerce,"A multichannel selling platform that syncs inventory and orders across Amazon, eBay, and Shopify.",https://www.marketmosaic.io,United States
+BazaarLink,E-commerce,A B2B wholesale marketplace connecting independent retailers with manufacturers and distributors.,https://www.bazaarlink.com,United Arab Emirates
+EcoCart,E-commerce,"An online marketplace exclusively for sustainable, eco-friendly, and ethically sourced products.",https://www.ecocart.shop,Sweden
+SnapStore,E-commerce,Enables creators and influencers to launch shoppable storefronts directly from social media.,https://www.snapstore.io,United States
+GiftGenie,E-commerce,An AI gift recommendation platform that suggests personalized presents based on recipient profiles.,https://www.giftgenie.app,United Kingdom
+QuickShip Logistics,E-commerce,A last-mile delivery and fulfillment network offering same-day shipping for online retailers.,https://www.quickshiplogistics.com,Brazil
+PriceTrackr,E-commerce,A dynamic pricing and competitor monitoring tool helping online sellers optimize their margins.,https://www.pricetrackr.io,India
+ArtisanMart,E-commerce,A curated marketplace showcasing handmade crafts and goods from independent global artisans.,https://www.artisanmart.com,Mexico

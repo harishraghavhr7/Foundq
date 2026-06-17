@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python *)",
+      "Skill(claude-api)",
+      "Bash(echo \"exit:$?\")",
+      "Read(//d/d/LLMRAG/**)",
+      "Bash(cat app/rag/retrieval.py)",
+      "Bash(grep -ril \"anthropic\\\\|claude\\\\|openai\\\\|llm\" . --include=*.py --include=*.txt --include=*.example)",
+      "WebSearch",
+      "WebFetch(domain:pypi.org)",
+      "Bash(rm -f app/services/competitor_finder.py)",
+      "Bash(mkdir -p app/rag)",
+      "Bash(echo '\"\"\"Retrieval-augmented search package \\(semantic competitor discovery\\).\"\"\"')",
+      "Bash(python3 -c \"import sys; print\\('python3 fallback needed'\\)\")",
+      "Bash(pip install *)",
+      "Read(//c/Users/ELCOT/.claude/projects/D--LLMRAG/memory/**)",
+      "Read(//c/Users/ELCOT/.claude/projects/D--LLMRAG/memory//**)",
+      "Bash(npm install *)",
+      "Bash(git init *)"
+    ]
+  }
+}

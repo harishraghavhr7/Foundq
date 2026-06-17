@@ -1,0 +1,12 @@
+fastapi==0.115.0
+uvicorn[standard]==0.30.6
+sqlalchemy==2.0.34
+psycopg2-binary==2.9.12
+pydantic==2.10.4
+pydantic-settings==2.7.1
+python-dotenv==1.0.1
+pytest==9.1.0
+httpx==0.28.1
+chromadb==1.5.9
+sentence-transformers==3.2.1
+google-genai==2.8.0

@@ -1,0 +1,52 @@
+[
+  {
+    "startup_name": "EduSpark",
+    "industry": "EdTech",
+    "description": "Adaptive online tutoring platform that personalizes math and science courses for K-12 students."
+  },
+  {
+    "startup_name": "TutorMate",
+    "industry": "EdTech",
+    "description": "Marketplace connecting students with expert tutors for live exam preparation and homework help."
+  },
+  {
+    "startup_name": "PayNimbus",
+    "industry": "FinTech",
+    "description": "Mobile wallet enabling instant UPI payments, bill splitting, and peer-to-peer money transfers."
+  },
+  {
+    "startup_name": "LendWise",
+    "industry": "FinTech",
+    "description": "Digital lending platform offering instant micro-loans and credit scoring for small businesses."
+  },
+  {
+    "startup_name": "MediQueue",
+    "industry": "HealthTech",
+    "description": "Telemedicine app to book doctor appointments and get online prescriptions from home."
+  },
+  {
+    "startup_name": "VitalTrack",
+    "industry": "HealthTech",
+    "description": "Wearable-integrated patient monitoring for chronic disease management and remote care."
+  },
+  {
+    "startup_name": "AgroSense",
+    "industry": "AgriTech",
+    "description": "IoT soil sensors and irrigation analytics that help farmers boost crop yield."
+  },
+  {
+    "startup_name": "FarmCart",
+    "industry": "AgriTech",
+    "description": "Marketplace that connects farmers directly with retailers to sell fresh produce."
+  },
+  {
+    "startup_name": "FlowDesk",
+    "industry": "SaaS",
+    "description": "Subscription-based CRM and workflow automation dashboard for B2B sales teams."
+  },
+  {
+    "startup_name": "ShopSphere",
+    "industry": "E-commerce",
+    "description": "Headless e-commerce platform with cart, checkout, and inventory management for online stores."
+  }
+]

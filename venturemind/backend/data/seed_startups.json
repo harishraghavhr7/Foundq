@@ -1,0 +1,127 @@
+[
+  {
+    "startup_name": "Interviewing.io",
+    "industry": "EdTech",
+    "description": "Anonymous mock technical interviews with engineers from top companies to help candidates practice and land software engineering jobs."
+  },
+  {
+    "startup_name": "Pramp",
+    "industry": "EdTech",
+    "description": "Free peer-to-peer platform for practicing coding and system design interviews with other candidates in real time."
+  },
+  {
+    "startup_name": "LeetCode",
+    "industry": "EdTech",
+    "description": "Online judge with thousands of coding problems and contests for practicing data structures and algorithms interview questions."
+  },
+  {
+    "startup_name": "HackerRank",
+    "industry": "EdTech",
+    "description": "Skills assessment and technical hiring platform where developers solve coding challenges and companies screen candidates."
+  },
+  {
+    "startup_name": "Triplebyte",
+    "industry": "EdTech",
+    "description": "Technical screening and job matching service that lets engineers prove their skills once and interview with many companies."
+  },
+  {
+    "startup_name": "Educative",
+    "industry": "EdTech",
+    "description": "Interactive text-based programming courses and interview prep tracks that run entirely in the browser without video."
+  },
+  {
+    "startup_name": "AlgoExpert",
+    "industry": "EdTech",
+    "description": "Curated catalog of coding interview questions with video explanations and a built-in code editor for prep."
+  },
+  {
+    "startup_name": "Stripe",
+    "industry": "FinTech",
+    "description": "Payments infrastructure and APIs that let businesses accept online payments and manage financial operations."
+  },
+  {
+    "startup_name": "Plaid",
+    "industry": "FinTech",
+    "description": "API platform that connects applications to users' bank accounts for payments"
+  },
+  {
+    "startup_name": "Robinhood",
+    "industry": "FinTech",
+    "description": "Commission-free stock and crypto trading mobile app aimed at first-time retail investors."
+  },
+  {
+    "startup_name": "Chime",
+    "industry": "FinTech",
+    "description": "Mobile-first neobank offering fee-free checking accounts"
+  },
+  {
+    "startup_name": "Coursera",
+    "industry": "EdTech",
+    "description": "Online learning platform partnering with universities to offer courses"
+  },
+  {
+    "startup_name": "Duolingo",
+    "industry": "EdTech",
+    "description": "Gamified mobile app for learning languages through short bite-sized lessons and streaks."
+  },
+  {
+    "startup_name": "Udemy",
+    "industry": "EdTech",
+    "description": "Marketplace where independent instructors publish video courses on programming"
+  },
+  {
+    "startup_name": "Khan Academy",
+    "industry": "EdTech",
+    "description": "Nonprofit offering free video lessons and practice exercises across math"
+  },
+  {
+    "startup_name": "Notion",
+    "industry": "SaaS",
+    "description": "All-in-one workspace combining notes"
+  },
+  {
+    "startup_name": "Airtable",
+    "industry": "SaaS",
+    "description": "Spreadsheet-database hybrid that lets non-developers build collaborative apps and workflows."
+  },
+  {
+    "startup_name": "Figma",
+    "industry": "SaaS",
+    "description": "Browser-based collaborative interface design tool for product teams to design and prototype together."
+  },
+  {
+    "startup_name": "Calendly",
+    "industry": "SaaS",
+    "description": "Scheduling automation tool that lets people book meetings without back-and-forth emails."
+  },
+  {
+    "startup_name": "Instacart",
+    "industry": "E-commerce",
+    "description": "On-demand grocery delivery marketplace connecting shoppers with local stores."
+  },
+  {
+    "startup_name": "DoorDash",
+    "industry": "E-commerce",
+    "description": "On-demand food delivery platform connecting customers with local restaurants and couriers."
+  },
+  {
+    "startup_name": "Shopify",
+    "industry": "E-commerce",
+    "description": "E-commerce platform that lets merchants build online stores and sell across multiple channels."
+  },
+  {
+    "startup_name": "Teladoc",
+    "industry": "HealthTech",
+    "description": "Telemedicine service providing virtual doctor visits and remote healthcare consultations."
+  },
+  {
+    "startup_name": "Ro",
+    "industry": "HealthTech",
+    "description": "Direct-to-consumer telehealth company offering online diagnosis"
+  },
+  {
+    "startup_name": "Carbon Health",
+    "industry": "HealthTech",
+    "description": "Tech-enabled primary and urgent care clinics with an app for booking and virtual visits."
+  }
+]
