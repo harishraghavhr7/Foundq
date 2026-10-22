@@ -4,12 +4,13 @@ import CompetitorsSection from "./CompetitorsSection";
 import SwotSection from "./SwotSection";
 import MarketDemandSection from "./MarketDemandSection";
 import ViabilityScoreSection from "./ViabilityScoreSection";
+import InvestmentMemoSection from "./InvestmentMemoSection";
 import type { IdeaResponse } from "../types";
 
 /**
  * Top-level dashboard. Owns the single piece of shared state — the analyzed
  * idea — and feeds it to every analysis section. Submitting the form sets the
- * idea, which lights up all four sections (they each load independently).
+ * idea, which lights up all five sections (they each load independently).
  */
 export default function Dashboard() {
   const [currentIdea, setCurrentIdea] = useState<IdeaResponse | null>(null);
@@ -19,8 +20,8 @@ export default function Dashboard() {
       <header className="mb-8">
         <h1 className="text-2xl font-bold tracking-tight text-slate-900">VentureMind</h1>
         <p className="mt-1 text-sm text-slate-500">
-          Pressure-test your startup idea — competitors, SWOT, market demand, and a viability
-          score, all in one place.
+          Pressure-test your startup idea — competitors, SWOT, market demand, viability
+          score, and AI Investment Committee deliberation, all in one place.
         </p>
       </header>
 
@@ -30,8 +31,9 @@ export default function Dashboard() {
           <IdeaForm onAnalyzed={(idea) => setCurrentIdea(idea)} />
         </div>
 
-        {/* Results column — the four analysis sections, in the requested order. */}
+        {/* Results column — the analysis sections and committee deliberation */}
         <div className="grid gap-6 lg:col-span-8">
+          <InvestmentMemoSection idea={currentIdea} />
           <CompetitorsSection idea={currentIdea} />
           <SwotSection idea={currentIdea} />
           <MarketDemandSection idea={currentIdea} />
@@ -41,3 +43,4 @@ export default function Dashboard() {
     </div>
   );
 }
+

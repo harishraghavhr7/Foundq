@@ -19,3 +19,19 @@ class Idea(Base):
         default=lambda: datetime.now(timezone.utc),
         nullable=False,
     )
+
+
+class InvestmentMemo(Base):
+    __tablename__ = "investment_memos"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    startup_id: Mapped[int] = mapped_column(Integer, nullable=False, index=True)
+    verdict: Mapped[str] = mapped_column(String(50), nullable=False)
+    score: Mapped[float] = mapped_column(nullable=False)
+    full_memo_json: Mapped[str] = mapped_column(Text, nullable=False)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        default=lambda: datetime.now(timezone.utc),
+        nullable=False,
+    )
+

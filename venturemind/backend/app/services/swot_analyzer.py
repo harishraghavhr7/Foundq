@@ -108,57 +108,48 @@ class SwotConfigError(SwotError):
     """Raised when the service is not configured (e.g. missing API key)."""
 
 
-# --- The Gemini call (the one impure seam; stubbed in tests) --------------
-
-@lru_cache(maxsize=1)
-def _get_client():
-    """Construct the Gemini client once. Imported lazily so the SDK is only a
-    hard dependency when the feature is actually exercised.
-
-    Kept local (rather than shared with the market analyzer) so this feature
-    stays self-contained and raises its own configuration error type.
-    """
-    if not settings.gemini_api_key:
-        raise SwotConfigError(
-            "GEMINI_API_KEY is not set — POST /swot-analysis is unavailable. "
-            "Add it to your .env (see .env.example)."
-        )
-    from google import genai  # lazy: keeps import-time deps light
-
-    return genai.Client(api_key=settings.gemini_api_key)
+from app.services.llm_client import BaseLLMClient, get_llm_client
 
 
 def _call_gemini(user_prompt: str) -> _SwotAnalysisLLM:
-    """Send one grounded request to Gemini and return the parsed SWOT.
+    """Send one grounded request to the configured LLM (Ollama or Gemini) and return the parsed SWOT."""
+    import asyncio
+    client = get_llm_client()
+    if client is None:
+        raise SwotConfigError(
+            "No LLM provider available. Set LLM_PROVIDER=ollama (and ensure Ollama is running) or set GEMINI_API_KEY."
+        )
 
-    Isolated behind this function so tests can monkeypatch it without the SDK,
-    an API key, or a network. Everything around it is pure and deterministic.
-    """
-    client = _get_client()  # validates the API key first (clear config error)
-    from google.genai import types
-    response = client.models.generate_content(
-        model=settings.gemini_model,
-        contents=user_prompt,
-        config=types.GenerateContentConfig(
-            system_instruction=SYSTEM_INSTRUCTION,
-            temperature=0.0,                    # deterministic, no creative drift
-            response_mime_type="application/json",
-            response_schema=_SwotAnalysisLLM,   # constrain output shape
-        ),
-    )
-
-    # The SDK parses JSON into our Pydantic model on `.parsed`; fall back to
-    # manual JSON validation if a model/SDK version leaves it unset.
-    parsed = getattr(response, "parsed", None)
-    if isinstance(parsed, _SwotAnalysisLLM):
-        return parsed
-    text = getattr(response, "text", None)
-    if not text:
-        raise SwotError("Gemini returned an empty response.")
     try:
-        return _SwotAnalysisLLM.model_validate_json(text)
-    except Exception as exc:  # malformed JSON despite the schema constraint
-        raise SwotError(f"Could not parse Gemini response: {exc}") from exc
+        try:
+            loop = asyncio.get_running_loop()
+        except RuntimeError:
+            loop = None
+
+        if loop and loop.is_running():
+            import concurrent.futures
+            with concurrent.futures.ThreadPoolExecutor() as pool:
+                return pool.submit(
+                    asyncio.run,
+                    client.generate_structured(
+                        system_instruction=SYSTEM_INSTRUCTION,
+                        user_prompt=user_prompt,
+                        response_schema=_SwotAnalysisLLM,
+                        temperature=0.0,
+                    ),
+                ).result()
+        else:
+            return asyncio.run(
+                client.generate_structured(
+                    system_instruction=SYSTEM_INSTRUCTION,
+                    user_prompt=user_prompt,
+                    response_schema=_SwotAnalysisLLM,
+                    temperature=0.0,
+                )
+            )
+    except Exception as exc:
+        raise SwotError(f"LLM generation failed: {exc}") from exc
+
 
 
 # --- Orchestration --------------------------------------------------------

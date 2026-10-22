@@ -1,39 +1,32 @@
-// Stub client for SWOT analysis.
-//
-// No backend route exists yet, so we synthesize an idea-aware SWOT (seeded by
-// title + industry) to render the dashboard. Replace the body with a real
-// request — e.g. POST /analyze/swot — when the route ships.
-import type { IdeaResponse, Swot } from "../types";
+// Real API client for SWOT analysis calling the FastAPI Gemini backend.
+import type { IdeaResponse, SwotAnalysisResponse } from "../types";
 
-function delay(ms: number): Promise<void> {
-  return new Promise((resolve) => setTimeout(resolve, ms));
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? "http://localhost:8000";
+
+export async function analyzeSwot(idea: IdeaResponse): Promise<SwotAnalysisResponse> {
+  const res = await fetch(`${API_BASE_URL}/swot-analysis`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      title: idea.title,
+      description: idea.description,
+      industry: idea.industry,
+    }),
+  });
+
+  if (!res.ok) {
+    let detail = `Request failed with status ${res.status}`;
+    try {
+      const body = await res.json();
+      if (body?.detail) {
+        detail = typeof body.detail === "string" ? body.detail : JSON.stringify(body.detail);
+      }
+    } catch {
+      /* response had no JSON body */
+    }
+    throw new Error(detail);
+  }
+
+  return res.json();
 }
 
-export async function analyzeSwot(idea: IdeaResponse): Promise<Swot> {
-  await delay(900); // SWOT "analysis" runs a touch slower than a lookup
-
-  const { title, industry } = idea;
-
-  return {
-    strengths: [
-      `Sharp focus on ${industry} with “${title}” as a clear wedge.`,
-      "Lean software model keeps marginal costs low and iteration fast.",
-      "Early-mover positioning helps shape the category narrative.",
-    ],
-    weaknesses: [
-      "Pre-revenue — brand trust and distribution still have to be earned.",
-      "A small team concentrates execution and key-person risk.",
-      `Easy to blend into a crowded ${industry} field without sharp differentiation.`,
-    ],
-    opportunities: [
-      `Rising ${industry} demand leaves room for a focused niche player.`,
-      "Integrations and partnerships can shortcut distribution.",
-      "AI-assisted features can compound into a durable moat.",
-    ],
-    threats: [
-      `Well-funded incumbents already operate across ${industry}.`,
-      "Low switching costs make early retention fragile.",
-      "Regulatory or platform-policy shifts could reset unit economics.",
-    ],
-  };
-}

@@ -5,7 +5,7 @@ import { analyzeSwot } from "../api/swot";
 import type { IdeaResponse, Swot } from "../types";
 
 interface QuadrantConfig {
-  key: keyof Swot;
+  key: "strengths" | "weaknesses" | "opportunities" | "threats";
   label: string;
   icon: string;
   headerClass: string;
@@ -43,17 +43,29 @@ export default function SwotSection({ idea }: SwotSectionProps) {
       loadingMessage="Weighing strengths, weaknesses, opportunities, threats…"
     >
       {data && (
-        <div className="grid gap-3 sm:grid-cols-2">
-          {QUADRANTS.map((quadrant) => (
-            <SwotQuadrant
-              key={quadrant.key}
-              label={quadrant.label}
-              icon={quadrant.icon}
-              items={data[quadrant.key]}
-              headerClass={quadrant.headerClass}
-              boxClass={quadrant.boxClass}
-            />
-          ))}
+        <div className="space-y-3">
+          <div className="grid gap-3 sm:grid-cols-2">
+            {QUADRANTS.map((quadrant) => (
+              <SwotQuadrant
+                key={quadrant.key}
+                label={quadrant.label}
+                icon={quadrant.icon}
+                items={data[quadrant.key]}
+                headerClass={quadrant.headerClass}
+                boxClass={quadrant.boxClass}
+              />
+            ))}
+          </div>
+          {data.model && (
+            <div className="flex items-center justify-between text-xs text-slate-400 pt-1 px-1">
+              <span>Grounded analysis via {data.model}</span>
+              {data.sufficient_context ? (
+                <span className="text-emerald-600 font-medium">✓ High context grounding</span>
+              ) : (
+                <span className="text-amber-600 font-medium">⚠️ Limited context available</span>
+              )}
+            </div>
+          )}
         </div>
       )}
     </SectionCard>

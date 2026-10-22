@@ -108,53 +108,48 @@ class AnalyzerConfigError(AnalyzerError):
     """Raised when the service is not configured (e.g. missing API key)."""
 
 
-# --- The Gemini call (the one impure seam; stubbed in tests) --------------
-
-@lru_cache(maxsize=1)
-def _get_client():
-    """Construct the Gemini client once. Imported lazily so the SDK is only a
-    hard dependency when the feature is actually exercised."""
-    if not settings.gemini_api_key:
-        raise AnalyzerConfigError(
-            "GEMINI_API_KEY is not set — POST /analyze-market is unavailable. "
-            "Add it to your .env (see .env.example)."
-        )
-    from google import genai  # lazy: keeps import-time deps light
-
-    return genai.Client(api_key=settings.gemini_api_key)
+from app.services.llm_client import BaseLLMClient, get_llm_client
 
 
 def _call_gemini(user_prompt: str) -> _MarketAnalysisLLM:
-    """Send one grounded request to Gemini and return the parsed analysis.
+    """Send one grounded request to the configured LLM (Ollama or Gemini) and return the parsed analysis."""
+    import asyncio
+    client = get_llm_client()
+    if client is None:
+        raise AnalyzerConfigError(
+            "No LLM provider available. Set LLM_PROVIDER=ollama (and ensure Ollama is running) or set GEMINI_API_KEY."
+        )
 
-    Isolated behind this function so tests can monkeypatch it without the SDK,
-    an API key, or a network. Everything around it is pure and deterministic.
-    """
-    client = _get_client()  # validates the API key first (clear config error)
-    from google.genai import types
-    response = client.models.generate_content(
-        model=settings.gemini_model,
-        contents=user_prompt,
-        config=types.GenerateContentConfig(
-            system_instruction=SYSTEM_INSTRUCTION,
-            temperature=0.0,                      # deterministic, no creative drift
-            response_mime_type="application/json",
-            response_schema=_MarketAnalysisLLM,   # constrain output shape
-        ),
-    )
-
-    # The SDK parses JSON into our Pydantic model on `.parsed`; fall back to
-    # manual JSON validation if a model/SDK version leaves it unset.
-    parsed = getattr(response, "parsed", None)
-    if isinstance(parsed, _MarketAnalysisLLM):
-        return parsed
-    text = getattr(response, "text", None)
-    if not text:
-        raise AnalyzerError("Gemini returned an empty response.")
     try:
-        return _MarketAnalysisLLM.model_validate_json(text)
-    except Exception as exc:  # malformed JSON despite the schema constraint
-        raise AnalyzerError(f"Could not parse Gemini response: {exc}") from exc
+        try:
+            loop = asyncio.get_running_loop()
+        except RuntimeError:
+            loop = None
+
+        if loop and loop.is_running():
+            import concurrent.futures
+            with concurrent.futures.ThreadPoolExecutor() as pool:
+                return pool.submit(
+                    asyncio.run,
+                    client.generate_structured(
+                        system_instruction=SYSTEM_INSTRUCTION,
+                        user_prompt=user_prompt,
+                        response_schema=_MarketAnalysisLLM,
+                        temperature=0.0,
+                    ),
+                ).result()
+        else:
+            return asyncio.run(
+                client.generate_structured(
+                    system_instruction=SYSTEM_INSTRUCTION,
+                    user_prompt=user_prompt,
+                    response_schema=_MarketAnalysisLLM,
+                    temperature=0.0,
+                )
+            )
+    except Exception as exc:
+        raise AnalyzerError(f"LLM generation failed: {exc}") from exc
+
 
 
 # --- Orchestration --------------------------------------------------------

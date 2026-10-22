@@ -1,0 +1,62 @@
+# =============================================================================
+# VentureMind AI (.gitignore)
+# =============================================================================
+
+# --- Virtual Environments ---
+.venv/
+venv/
+env/
+ENV/
+*.venv/
+
+# --- Python Bytecode & Cache ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# --- Testing & Coverage ---
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+
+# --- Environment Secrets & Local Overrides (NEVER COMMIT) ---
+.env
+.env.local
+.env.*.local
+*.env
+
+# Keep example configuration files
+!.env.example
+!venturemind/backend/.env.example
+!venturemind/frontend/.env.example
+
+# --- Node / Frontend Caches & Dependencies ---
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+.vite/
+dist/
+dist-ssr/
+*.local
+
+# --- Vector Database & Caches ---
+chroma_data/
+*.sqlite3-journal
+
+# --- IDE & Editor Settings ---
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+.claude/
+
+# --- OS Metadata ---
+.DS_Store
+Thumbs.db
+desktop.ini

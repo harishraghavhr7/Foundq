@@ -1,5 +1,6 @@
 """Pydantic request/response schemas — the API contract."""
-from datetime import datetime
+from datetime import datetime, timezone
+from typing import Any
 
 from pydantic import BaseModel, ConfigDict, Field
 
@@ -247,3 +248,107 @@ class SwotAnalysisResponse(BaseModel):
         description="The model's own signal that the inputs were rich enough to analyse well."
     )
     model: str = Field(description="Gemini model id that produced the analysis (empty if not called)")
+
+
+# ---------------------------------------------------------------------------
+# Multi-Agent Investment Committee schemas
+# ---------------------------------------------------------------------------
+
+class ToolCallRecord(BaseModel):
+    """Details of a tool call initialization and the information retrieved."""
+
+    tool_name: str = Field(description="Name of the tool that was called")
+    input_parameters: dict[str, Any] = Field(
+        default_factory=dict,
+        description="Parameters passed when initializing the tool call",
+    )
+    status: str = Field(
+        default="initialized",
+        description="Execution status: initialized, completed, or failed",
+    )
+    retrieved_information: str | None = Field(
+        default=None,
+        description="Information / payload retrieved from the tool execution",
+    )
+    agent_name: str | None = Field(
+        default=None,
+        description="Name of the agent or component that initialized the tool call",
+    )
+    timestamp: str = Field(
+        default_factory=lambda: datetime.now(timezone.utc).isoformat(),
+        description="ISO 8601 timestamp of tool initialization",
+    )
+    latency_ms: float | None = Field(
+        default=None,
+        description="Execution duration in milliseconds",
+    )
+
+
+class AgentVerdict(BaseModel):
+    """An individual agent's independent verdict on the startup."""
+
+    agent_name: str = Field(description="Name of the agent (Bull Agent, Bear Agent, Moat Agent)")
+    score: float = Field(ge=1.0, le=10.0, description="Score on a 1-10 scale")
+    summary: str = Field(description="Concise thesis / positioning summary")
+    key_points: list[str] = Field(description="Core arguments supporting the thesis")
+    recommendation: str = Field(description="Actionable advice / stance")
+    tool_calls: list[ToolCallRecord] = Field(
+        default_factory=list,
+        description="Tool calls initialized by this agent and the information retrieved",
+    )
+
+
+class DebateCritique(BaseModel):
+    """One agent's critique of the other committee members' verdicts."""
+
+    agent_name: str
+    critique_text: str
+
+
+class DebateRound(BaseModel):
+    """One round of cross-critique in the committee debate."""
+
+    round_number: int = 1
+    critiques: list[DebateCritique]
+
+
+class InvestmentMemo(BaseModel):
+    """Final synthesized investment committee memo and verdict."""
+
+    startup_id: int
+    startup_title: str
+    industry: str
+    overall_score: float = Field(ge=1.0, le=10.0, description="Lead partner consensus score (1-10)")
+    verdict: str = Field(description="Decision: STRONG INVEST, INVEST WITH CONDITIONS, CAUTION / PASS, PASS")
+    executive_summary: str
+    key_strengths: list[str]
+    key_risks: list[str]
+    recommendations: list[str]
+    agent_verdicts: list[AgentVerdict]
+    debate_transcript: list[DebateRound]
+    tool_calls: list[ToolCallRecord] = Field(
+        default_factory=list,
+        description="Consolidated tool calls initialized by committee agents and the information retrieved",
+    )
+    created_at: datetime
+
+
+class WebSearchRequest(BaseModel):
+    """Payload to initiate live web search intelligence."""
+
+    query: str = Field(min_length=1, max_length=500, description="Web search query")
+    search_type: str = Field(
+        default="funding_and_news",
+        description="Search category: funding_and_news, market_trends, or competitor_moves",
+    )
+
+
+class WebSearchResponse(BaseModel):
+    """Result of live web search tool execution."""
+
+    query: str
+    search_type: str
+    results: str
+    tool_record: ToolCallRecord
+
+
