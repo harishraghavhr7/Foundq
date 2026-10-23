@@ -153,27 +153,27 @@ class Agent(ABC):
             f"Industry: {industry_str}",
         ]
 
-        # 1. RAG Knowledge Base Retrieval
-        def _rag_find(title: str, description: str, industry: str | None) -> str:
-            import app.rag.retrieval as rag_retrieval
-            competitors = rag_retrieval.find_competitors(title=title, description=description, industry=industry, top_k=4)
+        # 1. Live Web Competitor Discovery
+        async def _web_comp_find(title: str, description: str, industry: str | None) -> str:
+            from app.services.web_competitor_search import find_web_competitors
+            competitors = await find_web_competitors(title=title, description=description, industry=industry, top_k=4)
             if competitors:
-                lines = ["Known / Retrieved Competitors:"]
+                lines = ["Live Web-Discovered Competitors & Market Players:"]
                 for c in competitors:
-                    lines.append(f"- {c.startup_name} ({c.industry}): {c.description} (Similarity: {c.similarity:.2f})")
+                    lines.append(f"- {c.name or c.startup_name} ({c.industry}): {c.description} (URL: {c.website or 'N/A'}, Region: {c.country})")
                 return "\n".join(lines)
-            return "No direct competitors retrieved from knowledge base."
+            return "No direct competitors discovered on live web search."
 
         try:
-            rag_data, rag_rec = await execute_and_track_tool(
-                tool_callable=_rag_find,
+            web_data, web_rec = await execute_and_track_tool(
+                tool_callable=_web_comp_find,
                 input_parameters={"title": title, "description": description, "industry": industry},
                 agent_name=self.name,
             )
-            rag_rec.tool_name = "rag_knowledge_base"
-            self.tool_calls.append(rag_rec)
-            if rag_data and not rag_data.startswith("No direct"):
-                context_lines.append(f"\n{rag_data}")
+            web_rec.tool_name = "web_competitor_search"
+            self.tool_calls.append(web_rec)
+            if web_data and not web_data.startswith("No direct"):
+                context_lines.append(f"\n{web_data}")
         except Exception:
             pass
 

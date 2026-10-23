@@ -39,14 +39,6 @@ def analyze_market_endpoint(
 ) -> schemas.MarketAnalysisResponse:
     """Retrieve competitors for the idea, then generate a grounded analysis."""
     try:
-        from app.rag.retrieval import find_competitors
-    except ImportError:
-        raise HTTPException(
-            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
-            detail="Market analysis unavailable: chromadb / sentence-transformers not installed.",
-        )
-
-    try:
         from app.services.market_analyzer import (
             AnalyzerConfigError,
             AnalyzerError,
@@ -58,12 +50,25 @@ def analyze_market_endpoint(
             detail="Market analysis unavailable: google-genai not installed.",
         )
 
-    competitors = find_competitors(
-        title=payload.title,
-        description=payload.description,
-        industry=payload.industry,
-        top_k=payload.top_k,
-    )
+    try:
+        from app.services.web_competitor_search import find_web_competitors_sync
+        competitors = find_web_competitors_sync(
+            title=payload.title,
+            description=payload.description,
+            industry=payload.industry,
+            top_k=payload.top_k,
+        )
+    except Exception:
+        try:
+            from app.rag.retrieval import find_competitors
+            competitors = find_competitors(
+                title=payload.title,
+                description=payload.description,
+                industry=payload.industry,
+                top_k=payload.top_k,
+            )
+        except Exception:
+            competitors = []
 
     try:
         analysis = analyze_market(

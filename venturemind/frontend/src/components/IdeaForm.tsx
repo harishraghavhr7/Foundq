@@ -3,13 +3,10 @@ import SectionCard from "./ui/SectionCard";
 import { submitIdea } from "../api/ideas";
 import type { IdeaCreate, IdeaResponse } from "../types";
 
-// Mirror the backend's supported industries (industry_classifier.SUPPORTED_INDUSTRIES)
-// so submitted ideas line up with the competitor knowledge base and classifier.
-const INDUSTRIES = ["EdTech", "FinTech", "HealthTech", "AgriTech", "SaaS", "E-commerce"] as const;
 
 type SubmitState =
   | { kind: "idle" | "submitting" }
-  | { kind: "success"; message: string }
+  | { kind: "success"; message: string; industry?: string }
   | { kind: "error"; message: string };
 
 interface IdeaFormProps {
@@ -30,7 +27,6 @@ const inputBase =
 export default function IdeaForm({ onAnalyzed }: IdeaFormProps) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [industry, setIndustry] = useState<string>(INDUSTRIES[0]);
   const [state, setState] = useState<SubmitState>({ kind: "idle" });
 
   const submitting = state.kind === "submitting";
@@ -42,12 +38,15 @@ export default function IdeaForm({ onAnalyzed }: IdeaFormProps) {
     const payload: IdeaCreate = {
       title: title.trim(),
       description: description.trim(),
-      industry,
     };
 
     try {
       const idea = await submitIdea(payload);
-      setState({ kind: "success", message: `Idea #${idea.id} submitted — analyzing “${idea.title}”.` });
+      setState({
+        kind: "success",
+        message: `Idea #${idea.id} submitted — analyzing “${idea.title}”.`,
+        industry: idea.industry,
+      });
       onAnalyzed?.(idea);
     } catch (err) {
       setState({ kind: "error", message: err instanceof Error ? err.message : "Submission failed." });
@@ -58,7 +57,7 @@ export default function IdeaForm({ onAnalyzed }: IdeaFormProps) {
     <SectionCard
       title="Your Startup Idea"
       icon="💡"
-      description="Describe your idea — we'll size up the competition, SWOT, demand, and viability."
+      description="Describe your idea — our AI automatically detects your industry and discovers live web competitors."
     >
       <form onSubmit={handleSubmit} className="grid gap-4">
         <label className={fieldLabel}>
@@ -87,21 +86,10 @@ export default function IdeaForm({ onAnalyzed }: IdeaFormProps) {
           />
         </label>
 
-        <label className={fieldLabel}>
-          Industry
-          <select
-            className={inputBase}
-            value={industry}
-            onChange={(e) => setIndustry(e.target.value)}
-            disabled={submitting}
-          >
-            {INDUSTRIES.map((opt) => (
-              <option key={opt} value={opt}>
-                {opt}
-              </option>
-            ))}
-          </select>
-        </label>
+        <div className="flex items-center gap-1.5 text-xs text-slate-500">
+          <span className="inline-block text-blue-500">✦</span>
+          <span>Industry will be automatically classified by AI upon analysis</span>
+        </div>
 
         <button
           type="submit"
@@ -112,9 +100,17 @@ export default function IdeaForm({ onAnalyzed }: IdeaFormProps) {
         </button>
 
         {state.kind === "success" && (
-          <p role="status" className="rounded-lg bg-emerald-50 px-3 py-2 text-sm text-emerald-700">
-            {state.message}
-          </p>
+          <div role="status" className="rounded-lg bg-emerald-50 px-3 py-2 text-sm text-emerald-800 border border-emerald-200">
+            <p className="font-medium">{state.message}</p>
+            {state.industry && (
+              <p className="mt-1 text-xs text-emerald-700 flex items-center gap-1.5">
+                <span className="font-semibold uppercase tracking-wider text-[10px] bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full">
+                  Auto-Detected Sector
+                </span>
+                <span>{state.industry}</span>
+              </p>
+            )}
+          </div>
         )}
         {state.kind === "error" && (
           <p role="alert" className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700">

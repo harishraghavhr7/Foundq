@@ -200,21 +200,23 @@ async def lookup_competitor_traction(company_or_category: str, industry: str | N
     comp_clean = company_or_category.strip()
     industry_str = f" in {industry}" if industry else ""
 
-    # 1. Query ChromaDB / startup knowledge base if available
+    # 1. Query live web competitor discovery
     local_competitors = []
     try:
-        import app.rag.retrieval as rag_retrieval
-        loop = asyncio.get_running_loop()
+        from app.services.web_competitor_search import find_web_competitors
         comps = await asyncio.wait_for(
-            loop.run_in_executor(None, rag_retrieval.find_competitors, comp_clean, comp_clean, industry, 3),
-            timeout=2.0,
+            find_web_competitors(comp_clean, comp_clean, industry, 3),
+            timeout=4.0,
         )
         if comps:
-            local_competitors = [f"- **{c.startup_name}** ({c.industry}): {c.description} (Similarity: {c.similarity:.2f})" for c in comps]
+            local_competitors = [
+                f"- **{c.name or c.startup_name}** ({c.industry}): {c.description} (URL: {c.website or 'N/A'})"
+                for c in comps
+            ]
     except Exception:
         pass
 
-    local_comp_str = "\n".join(local_competitors) if local_competitors else "- Direct peers mapped in active registry"
+    local_comp_str = "\n".join(local_competitors) if local_competitors else "- Direct peers mapped from live web search"
 
     # 2. Query Live Web via Tavily for real Product Hunt launches, alternatives, and pricing
     tavily_query = f"{comp_clean}{industry_str} Product Hunt launch upvotes reviews pricing models alternatives traction"

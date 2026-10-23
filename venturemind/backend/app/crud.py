@@ -5,10 +5,15 @@ from app import models, schemas
 
 
 def create_idea(db: Session, idea: schemas.IdeaCreate) -> models.Idea:
+    industry = (idea.industry or "").strip()
+    if not industry:
+        from app.services.industry_classifier import detect_industry_with_model
+        industry = detect_industry_with_model(title=idea.title, description=idea.description)
+
     db_idea = models.Idea(
         title=idea.title,
         description=idea.description,
-        industry=idea.industry,
+        industry=industry,
     )
     db.add(db_idea)
     db.commit()

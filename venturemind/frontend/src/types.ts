@@ -3,11 +3,14 @@
 export interface IdeaCreate {
   title: string;
   description: string;
-  industry: string;
+  industry?: string;
 }
 
-export interface IdeaResponse extends IdeaCreate {
+export interface IdeaResponse {
   id: number;
+  title: string;
+  description: string;
+  industry: string;
   created_at: string; // ISO timestamp
 }
 

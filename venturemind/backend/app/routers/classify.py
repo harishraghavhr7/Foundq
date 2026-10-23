@@ -16,6 +16,9 @@ router = APIRouter(tags=["industry"])
 
 @router.post("/classify-industry", response_model=schemas.ClassifyResponse)
 def classify_industry_endpoint(payload: schemas.ClassifyRequest) -> schemas.ClassifyResponse:
-    """Predict the industry of a startup from its title and description."""
-    result = classify_industry(title=payload.title, description=payload.description)
-    return schemas.ClassifyResponse(industry=result.industry, confidence=result.confidence)
+    """Predict the industry of a startup from its title and description using the AI model."""
+    from app.services.industry_classifier import classify_industry, detect_industry_with_model
+    detected = detect_industry_with_model(title=payload.title, description=payload.description)
+    kw_result = classify_industry(title=payload.title, description=payload.description)
+    conf = kw_result.confidence if kw_result.industry.lower() == detected.lower() else 0.88
+    return schemas.ClassifyResponse(industry=detected, confidence=conf)

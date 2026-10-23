@@ -11,9 +11,9 @@ interface CompetitorsSectionProps {
 
 export default function CompetitorsSection({ idea }: CompetitorsSectionProps) {
   const { status, data, error } = useAsync(
-    () => fetchCompetitors(idea!.industry),
-    [idea?.id, idea?.industry],
-    { enabled: !!idea, errorMessage: "Failed to load competitors." },
+    () => fetchCompetitors(idea!),
+    [idea?.id, idea?.title, idea?.description, idea?.industry],
+    { enabled: !!idea, errorMessage: "Failed to load competitors from web search." },
   );
 
   const competitors = data ?? [];
@@ -23,11 +23,11 @@ export default function CompetitorsSection({ idea }: CompetitorsSectionProps) {
     <SectionCard
       title="Competitors"
       icon="🥊"
-      description={idea ? `Established players in ${idea.industry}.` : undefined}
+      description={idea ? `Live web search intelligence on competitors in ${idea.industry}.` : undefined}
       status={status}
       error={error}
-      emptyMessage="Submit an idea to scan the market for competitors."
-      loadingMessage="Scanning the knowledge base…"
+      emptyMessage="Submit an idea to scan the web for real-time competitors."
+      loadingMessage="Searching the live web for market competitors…"
       accessory={
         status === "ready" && count > 0 ? (
           <span className="rounded-full bg-slate-100 px-2.5 py-1 text-xs font-semibold text-slate-700">
@@ -38,8 +38,8 @@ export default function CompetitorsSection({ idea }: CompetitorsSectionProps) {
     >
       {count === 0 ? (
         <p className="text-sm text-slate-400">
-          No direct competitors found in {idea?.industry ?? "this industry"} yet — that could be
-          whitespace worth validating, or a sign to sharpen the category.
+          No direct competitors discovered on the web for {idea?.industry ?? "this vertical"} yet — that could be
+          untapped market whitespace, or a sign to sharpen the search query.
         </p>
       ) : (
         <ul className="grid gap-3 sm:grid-cols-2">

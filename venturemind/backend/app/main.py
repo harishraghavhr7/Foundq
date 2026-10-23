@@ -67,16 +67,11 @@ app.include_router(swot.router)
 
 
 @app.post("/competitors", response_model=schemas.CompetitorSearchResponse)
-def competitors_endpoint(payload: schemas.CompetitorQuery) -> schemas.CompetitorSearchResponse:
-    """Return the top-K most semantically similar startups (competitors)."""
-    try:
-        from app.rag.retrieval import find_competitors
-    except ImportError:
-        raise HTTPException(
-            status_code=503,
-            detail="Competitor search unavailable: chromadb / sentence-transformers not installed.",
-        )
-    results = find_competitors(
+async def competitors_endpoint(payload: schemas.CompetitorQuery) -> schemas.CompetitorSearchResponse:
+    """Return live web search-discovered competitors for the startup idea."""
+    from app.services.web_competitor_search import find_web_competitors
+
+    results = await find_web_competitors(
         title=payload.title,
         description=payload.description,
         industry=payload.industry,
@@ -84,13 +79,5 @@ def competitors_endpoint(payload: schemas.CompetitorQuery) -> schemas.Competitor
     )
     return schemas.CompetitorSearchResponse(
         query_title=payload.title,
-        competitors=[
-            schemas.CompetitorOut(
-                startup_name=c.startup_name,
-                industry=c.industry,
-                description=c.description,
-                similarity=c.similarity,
-            )
-            for c in results
-        ],
+        competitors=results,
     )

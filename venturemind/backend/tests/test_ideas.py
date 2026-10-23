@@ -50,6 +50,20 @@ def test_submit_idea_success():
     assert body["created_at"] is not None
 
 
+def test_submit_idea_without_industry_auto_detects():
+    payload = {
+        "title": "CryptoMicroLoan",
+        "description": "Peer-to-peer micro-lending and wallet app with low interest rates.",
+    }
+    res = client.post("/ideas", json=payload)
+    assert res.status_code == 201
+    body = res.json()
+    assert body["id"] > 0
+    assert body["title"] == payload["title"]
+    # Model should auto-detect FinTech
+    assert body["industry"] in ("FinTech", "Fintech", "Financial Technology")
+
+
 def test_submit_idea_validation_error():
-    res = client.post("/ideas", json={"title": "", "description": "x", "industry": "y"})
+    res = client.post("/ideas", json={"title": "", "description": "x"})
     assert res.status_code == 422

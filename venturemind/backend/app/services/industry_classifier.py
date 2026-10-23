@@ -27,6 +27,7 @@ When nothing matches, top == 0 and confidence is 0.0 — a clear "unsure" signal
 """
 from __future__ import annotations
 
+import asyncio
 import math
 import re
 from dataclasses import dataclass
@@ -147,3 +148,91 @@ def classify_industry(title: str, description: str) -> ClassificationResult:
         confidence=round(confidence, 2),
         scores=raw_scores,
     )
+
+
+_CANONICAL_MAP: dict[str, str] = {
+    "edtech": "EdTech",
+    "education": "EdTech",
+    "e-learning": "EdTech",
+    "fintech": "FinTech",
+    "finance": "FinTech",
+    "banking": "FinTech",
+    "financial technology": "FinTech",
+    "healthtech": "HealthTech",
+    "healthcare": "HealthTech",
+    "health": "HealthTech",
+    "medtech": "HealthTech",
+    "agritech": "AgriTech",
+    "agriculture": "AgriTech",
+    "farming": "AgriTech",
+    "saas": "SaaS",
+    "b2b saas": "SaaS",
+    "software": "SaaS",
+    "enterprise software": "SaaS",
+    "ecommerce": "E-commerce",
+    "e-commerce": "E-commerce",
+    "retail": "E-commerce",
+    "cleantech": "CleanTech",
+    "clean tech": "CleanTech",
+    "climate tech": "CleanTech",
+    "cybersecurity": "Cybersecurity",
+    "cyber security": "Cybersecurity",
+    "proptech": "PropTech",
+    "real estate": "PropTech",
+    "biotech": "BioTech",
+    "ai": "AI / ML",
+    "ai / ml": "AI / ML",
+    "artificial intelligence": "AI / ML",
+}
+
+
+async def detect_industry_with_model_async(title: str, description: str) -> str:
+    """Predict the industry for a startup idea using the AI model (LLM with fallback).
+
+    Prompts the configured LLM client to infer the category from the startup title and description.
+    Falls back reliably to the rule-based keyword classifier if the LLM is unavailable or fails.
+    """
+    try:
+        from app.services.llm_client import get_llm_client
+        llm = get_llm_client()
+        if llm and llm.is_available():
+            prompt = (
+                f"Startup Title: {title}\n"
+                f"Startup Description: {description}\n\n"
+                f"Identify the primary industry or sector for this startup. "
+                f"Standard categories include: EdTech, FinTech, HealthTech, AgriTech, SaaS, E-commerce, CleanTech, AI / ML, Cybersecurity, PropTech, BioTech. "
+                f"Respond with ONLY the single industry name (1-2 words). Do not include any explanations or punctuation."
+            )
+            raw = await llm.generate_text(
+                system_instruction="You are an expert venture capital classification model. Return only the concise industry name.",
+                user_prompt=prompt,
+                temperature=0.1,
+            )
+            clean = raw.strip().strip("'\"`.,;:").strip()
+            clean = re.sub(r"^(?:Industry|Sector|Category)\s*:\s*", "", clean, flags=re.IGNORECASE).strip()
+            if clean and len(clean) <= 50:
+                low = clean.lower()
+                if low in _CANONICAL_MAP:
+                    return _CANONICAL_MAP[low]
+                return clean.title() if clean.islower() else clean
+    except Exception:
+        pass
+
+    # Deterministic fallback to keyword classifier
+    return classify_industry(title=title, description=description).industry
+
+
+def detect_industry_with_model(title: str, description: str) -> str:
+    """Synchronous helper for model-based industry detection."""
+    try:
+        loop = asyncio.get_event_loop()
+    except RuntimeError:
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+
+    if loop.is_running():
+        import concurrent.futures
+        with concurrent.futures.ThreadPoolExecutor(max_workers=1) as pool:
+            return pool.submit(asyncio.run, detect_industry_with_model_async(title, description)).result()
+    return loop.run_until_complete(detect_industry_with_model_async(title, description))
+

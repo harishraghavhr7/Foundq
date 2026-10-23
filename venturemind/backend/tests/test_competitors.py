@@ -89,5 +89,5 @@ def test_endpoint_returns_competitor_contract():
     assert body["query_title"] == "MockLoop"
     assert 1 <= len(body["competitors"]) <= 3
     first = body["competitors"][0]
-    assert set(first.keys()) == {"startup_name", "industry", "description", "similarity"}
+    assert {"startup_name", "industry", "description", "similarity"}.issubset(set(first.keys()))
     assert 0.0 <= first["similarity"] <= 1.0

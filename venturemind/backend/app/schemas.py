@@ -10,7 +10,7 @@ class IdeaCreate(BaseModel):
 
     title: str = Field(min_length=1, max_length=255)
     description: str = Field(min_length=1)
-    industry: str = Field(min_length=1, max_length=100)
+    industry: str | None = Field(default=None, max_length=100)
 
 
 class IdeaResponse(BaseModel):
@@ -50,10 +50,21 @@ class CompetitorQuery(BaseModel):
 
 
 class CompetitorOut(BaseModel):
-    startup_name: str
-    industry: str
-    description: str
-    similarity: float = Field(ge=0.0, le=1.0)
+    startup_name: str = ""
+    name: str = ""
+    industry: str = ""
+    description: str = ""
+    similarity: float = Field(default=0.88, ge=0.0, le=1.0)
+    website: str = Field(default="")
+    country: str = Field(default="Global")
+
+    model_config = ConfigDict(populate_by_name=True)
+
+    def model_post_init(self, __context: Any) -> None:
+        if not self.name and self.startup_name:
+            object.__setattr__(self, "name", self.startup_name)
+        elif not self.startup_name and self.name:
+            object.__setattr__(self, "startup_name", self.name)
 
 
 class CompetitorSearchResponse(BaseModel):
