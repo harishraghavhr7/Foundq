@@ -59,9 +59,9 @@ class TestFallbackChain(unittest.TestCase):
 
     def test_fallback_order_resolution(self):
         primary, fallbacks = get_fallback_models()
-        self.assertEqual(primary._llm_type, "gemini")
+        self.assertEqual(primary._llm_type, "openrouter")
         fallback_types = [f._llm_type for f in fallbacks]
-        self.assertEqual(fallback_types, ["groq", "openrouter", "ollama"])
+        self.assertEqual(fallback_types, ["gemini", "groq", "ollama"])
 
     def test_openrouter_client_text_and_structured(self):
         client = OpenRouterClient(api_key="sk-or-test-key", model="openai/gpt-4o-mini")
@@ -204,7 +204,7 @@ class TestFallbackChain(unittest.TestCase):
                 self.assertIsInstance(client, FallbackLLMClient)
                 self.assertEqual(
                     [name for name, _ in client.providers],
-                    ["gemini", "groq", "openrouter", "ollama"],
+                    ["openrouter", "gemini", "groq", "ollama"],
                 )
 
 

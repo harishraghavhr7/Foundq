@@ -31,8 +31,8 @@ class Settings(BaseSettings):
     openrouter_model: str = "openai/gpt-4o-mini"
     openrouter_base_url: str = "https://openrouter.ai/api/v1"
 
-    # LLM Fallback order: comma-separated list of providers to try (e.g. "gemini,groq,openrouter,ollama")
-    llm_fallback_order: str = "gemini,groq,openrouter,ollama"
+    # LLM Fallback order: comma-separated list of providers to try (e.g. "openrouter,gemini,groq,ollama")
+    llm_fallback_order: str = "openrouter,gemini,groq,ollama"
 
     # External Research & Tool APIs
     tavily_api_key: str = ""

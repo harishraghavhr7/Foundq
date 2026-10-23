@@ -141,8 +141,8 @@ class TestAgentFallbackMiddleware(unittest.TestCase):
 
     def test_create_committee_agent_factory(self):
         primary, fallbacks = get_fallback_models()
-        self.assertEqual(primary._llm_type, "gemini")
-        self.assertEqual([f._llm_type for f in fallbacks], ["groq", "openrouter", "ollama"])
+        self.assertEqual(primary._llm_type, "openrouter")
+        self.assertEqual([f._llm_type for f in fallbacks], ["gemini", "groq", "ollama"])
 
         agent = create_investment_committee_agent(
             system_prompt="You are an investment analyst.",

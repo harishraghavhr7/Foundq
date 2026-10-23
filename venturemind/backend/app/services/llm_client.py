@@ -446,7 +446,7 @@ class FallbackLLMClient(BaseLLMClient):
                 if p.strip()
             ]
             if not order:
-                order = ["gemini", "groq", "openrouter", "ollama"]
+                order = ["openrouter", "gemini", "groq", "ollama"]
 
             self.providers = []
             for name in order:
@@ -733,7 +733,7 @@ def get_fallback_models(
         if p.strip()
     ]
     if not order:
-        order = ["gemini", "groq", "openrouter", "ollama"]
+        order = ["openrouter", "gemini", "groq", "ollama"]
 
     if isinstance(primary_client, BaseLLMClient):
         if isinstance(primary_client, GeminiClient):
