@@ -3,15 +3,15 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
-    database_url: str = "postgresql+psycopg2://postgres:postgres@localhost:5432/venturemind"
+    database_url: str = "sqlite:///./venturemind.db"
     cors_origins: str = "http://localhost:5173,http://127.0.0.1:5173"
 
     # RAG / ChromaDB
     chroma_persist_dir: str = "./chroma_data"
     chroma_collection: str = "startups"
 
-    # LLM Provider: "ollama", "gemini", or "auto" (default: "ollama")
-    llm_provider: str = "ollama"
+    # LLM Provider: "ollama", "gemini", or "auto" (default: "auto")
+    llm_provider: str = "auto"
 
     # Ollama local LLM configuration
     ollama_base_url: str = "http://localhost:11434"
@@ -39,7 +39,6 @@ class Settings(BaseSettings):
     serper_api_key: str = ""
 
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
-
 
     @property
     def cors_origin_list(self) -> list[str]:
