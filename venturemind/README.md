@@ -14,7 +14,7 @@ venturemind/
 │   ├── app/
 │   │   ├── main.py                 # FastAPI application factory & routes
 │   │   ├── config.py               # Pydantic Settings configuration
-│   │   ├── database.py             # Database engine & session dependency
+│   │   ├── database.py             # Database engine, connection normalizer & session dependency
 │   │   ├── models.py               # SQLAlchemy models (Idea, InvestmentMemo)
 │   │   ├── schemas.py              # Pydantic v2 schemas
 │   │   ├── crud.py                 # Database CRUD operations
@@ -22,22 +22,23 @@ venturemind/
 │   │   │   ├── classify.py         # Industry detection
 │   │   │   ├── score.py            # Viability scoring
 │   │   │   ├── market_demand.py    # Market demand score
-│   │   │   ├── analyze.py          # Grounded Gemini analysis & Committee
+│   │   │   ├── analyze.py          # Multi-Agent Investment Committee
 │   │   │   └── swot.py             # SWOT generation
 │   │   ├── services/
-│   │   │   ├── industry_classifier.py
-│   │   │   ├── viability_scorer.py
-│   │   │   ├── market_demand.py
-│   │   │   ├── market_analyzer.py
-│   │   │   ├── swot_analyzer.py
-│   │   │   ├── llm_client.py       # Gemini, Groq, Ollama adapter
-│   │   │   ├── debate.py           # LangGraph multi-agent debate
-│   │   │   ├── memo_writer.py      # Lead partner memo synthesis
-│   │   │   └── agents/             # Bull, Bear, Moat, Orchestrator & Tools
-│   │   ├── prompts/                # Committee system prompts
-│   │   └── rag/                    # ChromaDB embeddings, ingestion & retrieval
+│   │   │   ├── web_competitor_search.py # Live web competitor intelligence (Tavily + LLM)
+│   │   │   ├── industry_classifier.py   # Pure-logic NLP classifier
+│   │   │   ├── viability_scorer.py      # 5-factor mathematical model
+│   │   │   ├── market_demand.py         # Market demand score engine
+│   │   │   ├── swot_analyzer.py         # SWOT generation service
+│   │   │   ├── llm_client.py            # Multi-provider LLM adapter (OpenRouter/Gemini/Groq/Ollama)
+│   │   │   ├── debate.py                # LangGraph cyclic multi-agent debate
+│   │   │   ├── memo_writer.py           # Lead partner memo synthesis
+│   │   │   └── agents/                  # Bull, Bear, Moat, Orchestrator & Tools
+│   │   └── prompts/                     # Committee system prompts
 │   ├── tests/                      # Pytest unit & integration test suite
-│   ├── requirements.txt            # Python dependencies
+│   ├── requirements.txt            # Python dependencies (streamlined for cloud deployment)
+│   ├── Procfile                    # Cloud process runner
+│   ├── runtime.txt                 # Pinned Python version
 │   └── .env.example
 ├── frontend/
 │   ├── src/
@@ -49,6 +50,7 @@ venturemind/
 │   │   └── main.tsx
 │   ├── package.json
 │   ├── vite.config.ts
+│   ├── vercel.json                 # Vercel SPA routing rewrites
 │   └── .env.example
 └── db/
     └── schema.sql                  # PostgreSQL & SQLite DDL
